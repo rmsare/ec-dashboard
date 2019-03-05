@@ -11,11 +11,7 @@ from bokeh.layouts import column, row, gridplot
 #from bokeh.palettes import ...
 
 
-def meteo_tab(df):
-    
-    def get_dataset(src):
-        df = src
-        return ColumnDataSource(data=df)
+def meteo_tab(source):
 
     def make_wind_plot(data):
         p = figure(x_axis_type='datetime', 
@@ -44,10 +40,9 @@ def meteo_tab(df):
     def update(attr, old, new):
         pass
 
-    src = get_dataset(df)
-    wind_plot = make_wind_plot(src)
-    temp_plot = make_temp_plot(src)
-    pres_plot = make_pres_plot(src)
+    wind_plot = make_wind_plot(source)
+    temp_plot = make_temp_plot(source)
+    pres_plot = make_pres_plot(source)
 
     div = Div(text='', height=10)
     layout = column(wind_plot, temp_plot, pres_plot)

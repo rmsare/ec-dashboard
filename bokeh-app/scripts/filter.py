@@ -1,38 +1,32 @@
+import os
 import numpy as np
 import pandas as pd
 
-from scripts.utils import style
+from scripts.utils import filter_data, read_data, style
 
 from datetime import date
 
 from bokeh.plotting import figure, show
 from bokeh.models import Panel, ColumnDataSource, Range1d
 from bokeh.models.layouts import WidgetBox
-from bokeh.models.widgets import DatePicker, TextInput
+from bokeh.models.widgets import Button, CheckboxButtonGroup, DatePicker, TextInput
 
 from bokeh.layouts import column, row
 #from bokeh.palettes import ...
 
 
-def filter_tab(df):
-    
-    def get_dataset(src):
-        df = src
-        return ColumnDataSource(data=df)
+def filter_tab():
+        
+    df = read_data()
+    src = ColumnDataSource(df)
 
-    def make_plot(src):
-        p = figure(x_axis_type='datetime', tools='crosshair,hover,pan,box_zoom,reset',
-                   y_range=[-10, 5000], plot_height=300, y_axis_label='CO2 flux [umol/m2s]')
+    fig = figure(x_axis_type='datetime', tools='crosshair,hover,pan,box_zoom,reset',
+               y_range=[-10, 5000], plot_height=300, y_axis_label='CO2 flux [umol/m2s]')
 
-        p.scatter('date', 'co2_flux', size=10, line_color='white', color='black', fill_alpha=0.9, source=src)
-        p = style(p)
+    plot = fig.scatter('date', 'co2_flux', size=10, line_color='white', color='black', fill_alpha=0.9, source=src)
+    fig = style(fig)
 
-        return p
-
-    src = get_dataset(df)
-    dates = list(map(pd.to_datetime, src.data['date']))
-
-    plot = make_plot(src)
+    dates = list(map(pd.to_datetime, df.index.values))
 
     min_date = DatePicker(title='Start date',
                              min_date=min(dates),
@@ -42,18 +36,41 @@ def filter_tab(df):
                              min_date=min(dates),
                              max_date=max(dates),
                              value=max(dates))
+    ustar = TextInput(title='Minimum u*', value='0.3')
+    daynight = CheckboxButtonGroup(labels=['Daytime', 'Nighttime'], active=[0, 1])
+    update = Button(label='Update', button_type='success')
 
-    # filter = ...
-    # daytime = ...
+    def update_data():
+        df = read_data()
+        
+        df = df.loc[(df.index > pd.to_datetime(min_date.value)) & \
+                    (df.index < pd.to_datetime(max_date.value))]
 
-    def update_plot(attr, old, new):
-        plot.x_range.bounds = [pd.to_datetime(min_date.value), pd.to_datetime(max_date.value)]
+        df = df.loc[df['u*'] > float(ustar.value)]
+        
+        if daynight.active == []:
+            df = pd.DataFrame([])
+        elif daynight.active == [0]:
+            df = df.loc[df.daytime == 1]
+        elif daynight.active == [1]:
+            df = df.loc[df.daytime == 0]
+        elif daynight.active == [0, 1]:
+            df = df.loc[(df.daytime == 1) | (df.daytime == 0)]
 
-    for wid in [min_date, max_date]:
-        wid.on_change('value', update_plot)
+        print(daynight.active, ustar.value, min_date.value, max_date.value)
+        
+        src = ColumnDataSource(df)
+        plot.data_source.data = src.data
 
-    controls = WidgetBox(min_date, max_date) # filter_select, daytime_select)
-    layout = column(row(controls, plot))
+    update_data()
+
+    update.on_click(update_data)
+
+    controls = column(WidgetBox(min_date, max_date),
+                      ustar,
+                      daynight,
+                      update)
+    layout = row(controls, fig)
     tab = Panel(child=layout, title='Filtering', width=3000)
     
-    return src.data, tab
+    return src, tab
