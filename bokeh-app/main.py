@@ -10,8 +10,8 @@ from scripts.meteo import meteo_tab
 #from scripts.crossplot import crossplot_tab
 from scripts.wind import wind_tab
 
-#from settings import STATIONS
-from utils import download_data, filter_data
+#from scripts.settings import STATIONS
+from scripts.utils import download_data, filter_data
 
 #print('Downloading data from S3...')
 #download_data(station_name)
