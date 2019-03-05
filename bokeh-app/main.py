@@ -16,16 +16,10 @@ from scripts.utils import download_data, filter_data
 #print('Downloading data from S3...')
 #download_data(station_name)
 
-#print('QC filtering data...')
-df = pd.read_pickle(os.path.join(os.path.dirname(__file__), 'data/master.pk'))
-df = filter_data(df)
-df = df.iloc[0:100]
-df.index.name = 'date'
-
-df, tab1 = filter_tab(df)
-tab2 = flux_tab(df)
-tab3 = meteo_tab(df)
-tab4 = wind_tab(df)
+src, tab1 = filter_tab()
+tab2 = flux_tab(src)
+tab3 = meteo_tab(src)
+tab4 = wind_tab(src)
 #tab5 = crossplot_tab(df)
 
 tabs = Tabs(tabs=[tab1, tab2, tab3, tab4])
