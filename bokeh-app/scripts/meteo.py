@@ -17,7 +17,7 @@ def meteo_tab(source):
         p = figure(x_axis_type='datetime', 
                    tools='crosshair,hover,pan,box_zoom,reset', plot_height=300,
                    y_axis_label='Wind speed [m/s]')
-        p.scatter('date', 'wind_speed', size=10, line_color='white', color='black', fill_alpha=0.9, source=data)
+        p.scatter('date', 'wind_speed', size=5, color='black', fill_alpha=0.9, source=data)
         p = style(p)
         return p
 
@@ -25,7 +25,7 @@ def meteo_tab(source):
         p = figure(x_axis_type='datetime', x_range=wind_plot.x_range,
                    tools='crosshair,hover,pan,box_zoom,reset', plot_height=300,
                    y_axis_label='Temperature [K]')
-        p.scatter('date', 'air_temperature', size=10, line_color='white', color='black', fill_alpha=0.9, source=data)
+        p.scatter('date', 'air_temperature', size=5, color='black', fill_alpha=0.9, source=data)
         p = style(p)
         return p
 
@@ -33,7 +33,7 @@ def meteo_tab(source):
         p = figure(x_axis_type='datetime', x_range=wind_plot.x_range,
                    tools='crosshair,hover,pan,box_zoom,reset', plot_height=300,
                    y_axis_label='Pressure [Pa]')
-        p.scatter('date', 'air_pressure', size=10, line_color='white', color='black', fill_alpha=0.9, source=data)
+        p.scatter('date', 'air_pressure', size=5, color='black', fill_alpha=0.9, source=data)
         p = style(p)
         return p
 
@@ -44,7 +44,7 @@ def meteo_tab(source):
     temp_plot = make_temp_plot(source)
     pres_plot = make_pres_plot(source)
 
-    div = Div(text='', height=10)
+    div = Div(text='', height=5)
     layout = column(wind_plot, temp_plot, pres_plot)
     tab = Panel(child=layout, title='Meterology', width=3000)
     

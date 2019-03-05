@@ -23,7 +23,7 @@ def filter_tab():
     fig = figure(x_axis_type='datetime', tools='crosshair,hover,pan,box_zoom,reset',
                y_range=[-10, 5000], plot_height=300, y_axis_label='CO2 flux [umol/m2s]')
 
-    plot = fig.scatter('date', 'co2_flux', size=10, line_color='white', color='black', fill_alpha=0.9, source=src)
+    plot = fig.scatter('date', 'co2_flux', size=5, color='black', fill_alpha=0.9, source=src)
     fig = style(fig)
 
     dates = list(map(pd.to_datetime, df.index.values))
@@ -57,8 +57,6 @@ def filter_tab():
         elif daynight.active == [0, 1]:
             df = df.loc[(df.daytime == 1) | (df.daytime == 0)]
 
-        print(daynight.active, ustar.value, min_date.value, max_date.value)
-        
         src = ColumnDataSource(df)
         plot.data_source.data = src.data
 

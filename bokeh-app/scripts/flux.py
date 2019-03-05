@@ -15,16 +15,16 @@ def flux_tab(source):
 
     def make_co2_plot(source):
         p = figure(x_axis_type='datetime', tools='crosshair,hover,pan,box_zoom,reset',
-                   y_range=[-10, 5000], plot_height=300, y_axis_label='CO2 flux [umol/m2s]')
+                   y_range=[-5, 5000], plot_height=300, y_axis_label='CO2 flux [umol/m2s]')
 
-        p.scatter('date', 'co2_flux', size=10, line_color='white', color='black', fill_alpha=0.9, source=source)
+        p.scatter('date', 'co2_flux', size=5, color='black', fill_alpha=0.9, source=source)
 
         #source2 = pd.DataFrame(index=source['date'], data=source['co2_flux'])
         #daily = ColumnDataSource(source2.rolling('1D').mean())
-        #p.line('date', 'co2_flux', size=10, line_color='white', color='b', fill_alpha=0.9, source=daily)
+        #p.line('date', 'co2_flux', size=5, line_color='white', color='b', fill_alpha=0.9, source=daily)
 
         #seasonal = ColumnDataSource(source2.rolling('120D').mean())
-        #p.line('date', 'co2_flux', size=10, line_color='white', color='r', fill_alpha=0.9, source=seasonal)
+        #p.line('date', 'co2_flux', size=5, line_color='white', color='r', fill_alpha=0.9, source=seasonal)
 
         p = style(p)
 
@@ -35,14 +35,14 @@ def flux_tab(source):
                    tools='crosshair,hover,pan,box_zoom,reset', plot_height=300,
                    y_axis_label='H2O flux [umol/m2s]')
         
-        p.scatter('date', 'h2o_flux',  size=10, line_color='white', color='black', fill_alpha=0.9,source=source)
+        p.scatter('date', 'h2o_flux',  size=5, color='black', fill_alpha=0.9,source=source)
         
         #source2 = pd.DataFrame(index=source['date'], data=source['h2o_flux'])
         #daily = ColumnDataSource(source2.rolling('1D').mean())
-        #p.line('date', 'h2o_flux', size=10, line_color='white', color='b', fill_alpha=0.9, source=daily)
+        #p.line('date', 'h2o_flux', size=5, line_color='white', color='b', fill_alpha=0.9, source=daily)
 
         #seasonal = ColumnDataSource(source2.rolling('120D').mean())
-        #p.line('date', 'h2o_flux', size=10, line_color='white', color='r', fill_alpha=0.9, source=seasonal)
+        #p.line('date', 'h2o_flux', size=5, line_color='white', color='r', fill_alpha=0.9, source=seasonal)
        
         p = style(p)
 
@@ -53,14 +53,14 @@ def flux_tab(source):
                    tools='crosshair,hover,pan,box_zoom,reset', plot_height=300,
                    y_axis_label='H [W/m2]')
         
-        p.scatter('date', 'H',  size=10, line_color='white', color='black', fill_alpha=0.9,source=source)
+        p.scatter('date', 'H',  size=5, color='black', fill_alpha=0.9,source=source)
         
         #source2 = pd.DataFrame(index=source['date'], data=source['H'])
         #daily = ColumnDataSource(source2.rolling('1D').mean())
-        #p.line('date', 'H', size=10, line_color='white', color='b', fill_alpha=0.9, source=daily)
+        #p.line('date', 'H', size=5, line_color='white', color='b', fill_alpha=0.9, source=daily)
 
         #seasonal = ColumnDataSource(source2.rolling('120D').mean())
-        #p.line('date', 'H', size=10, line_color='white', color='r', fill_alpha=0.9, source=seasonal)
+        #p.line('date', 'H', size=5, line_color='white', color='r', fill_alpha=0.9, source=seasonal)
         
         p = style(p)
 
@@ -71,14 +71,14 @@ def flux_tab(source):
                    tools='crosshair,hover,pan,box_zoom,reset', plot_height=300,
                    y_axis_label='LE [W/m2]')
 
-        p.scatter('date', 'LE',  size=10, line_color='white', color='black', fill_alpha=0.9,source=source)
+        p.scatter('date', 'LE',  size=5, color='black', fill_alpha=0.9,source=source)
 
         #source2 = pd.DataFrame(index=source['date'], data=source['LE'])
         #daily = ColumnDataSource(source2.rolling('1D').mean())
-        #p.line('date', 'LE', size=10, line_color='white', color='b', fill_alpha=0.9, source=daily)
+        #p.line('date', 'LE', size=5, line_color='white', color='b', fill_alpha=0.9, source=daily)
 
         #seasonal = ColumnDataSource(source2.rolling('120D').mean())
-        #p.line('date', 'LE', size=10, line_color='white', color='r', fill_alpha=0.9, source=seasonal)
+        #p.line('date', 'LE', size=5, line_color='white', color='r', fill_alpha=0.9, source=seasonal)
         
         p = style(p)
 
@@ -92,7 +92,7 @@ def flux_tab(source):
     H_plot = make_H_plot(source)
     LE_plot = make_LE_plot(source)
 
-    div = Div(text='', height=10)
+    div = Div(text='', height=5)
     layout = column(flux_plot, h2o_plot, H_plot, LE_plot)
     tab = Panel(child=layout, title='Fluxes', width=3000)
     
