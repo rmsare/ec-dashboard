@@ -46,6 +46,6 @@ def meteo_tab(source):
 
     div = Div(text='', height=5)
     layout = column(wind_plot, temp_plot, pres_plot)
-    tab = Panel(child=layout, title='Meterology', width=3000)
+    tab = Panel(child=layout, title='Meteorology', width=3000)
     
     return tab
