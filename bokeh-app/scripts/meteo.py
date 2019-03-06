@@ -14,7 +14,7 @@ from bokeh.layouts import column, row, gridplot
 def meteo_tab(source):
 
     def make_wind_plot(data):
-        p = figure(x_axis_type='datetime', 
+        p = figure(title='Wind Speed', x_axis_type='datetime', 
                    tools='crosshair,hover,pan,box_zoom,reset', plot_height=300,
                    y_axis_label='Wind speed [m/s]')
         p.scatter('date', 'wind_speed', size=5, color='black', fill_alpha=0.9, source=data)
@@ -23,7 +23,7 @@ def meteo_tab(source):
         return p
 
     def make_temp_plot(data):
-        p = figure(x_axis_type='datetime', x_range=wind_plot.x_range,
+        p = figure(title='Air Temperature', x_axis_type='datetime', x_range=wind_plot.x_range,
                    tools='crosshair,hover,pan,box_zoom,reset', plot_height=300,
                    y_axis_label='Temperature [K]')
         p.scatter('date', 'air_temperature', size=5, color='black', fill_alpha=0.9, source=data)
@@ -32,7 +32,7 @@ def meteo_tab(source):
         return p
 
     def make_pres_plot(data):
-        p = figure(x_axis_type='datetime', x_range=wind_plot.x_range,
+        p = figure(title='Air Pressure', x_axis_type='datetime', x_range=wind_plot.x_range,
                    tools='crosshair,hover,pan,box_zoom,reset', plot_height=300,
                    y_axis_label='Pressure [Pa]')
         p.scatter('date', 'air_pressure', size=5, color='black', fill_alpha=0.9, source=data)

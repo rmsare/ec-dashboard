@@ -20,7 +20,7 @@ def filter_tab():
     df = read_data()
     src = ColumnDataSource(df)
 
-    fig = figure(x_axis_type='datetime', tools='crosshair,hover,pan,box_zoom,reset',
+    fig = figure(title='CO2 Flux', x_axis_type='datetime', tools='crosshair,hover,pan,box_zoom,reset',
                y_range=[-10, 5000], plot_height=300, y_axis_label='CO2 flux [umol/m2s]')
 
     plot = fig.scatter('date', 'co2_flux', size=5, color='black', fill_alpha=0.9, source=src)

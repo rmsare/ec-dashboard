@@ -23,7 +23,6 @@ def read_data():
 def plot_averages(source, plot, var):
 
     palette = ["#718dbf", "#e84d60"]
-    
 
     daily = pd.DataFrame(index=source.data['date'], data=source.data[var]).resample('1D').mean()
     daily.index.name = 'date'
