@@ -1,7 +1,7 @@
 import numpy as np
 import pandas as pd
 
-from scripts.utils import style
+from scripts.utils import plot_averages, style
 
 from bokeh.plotting import figure
 from bokeh.models import Panel, ColumnDataSource
@@ -17,15 +17,9 @@ def flux_tab(source):
         p = figure(x_axis_type='datetime', tools='crosshair,hover,pan,box_zoom,reset',
                    y_range=[-5, 5000], plot_height=300, y_axis_label='CO2 flux [umol/m2s]')
 
-        p.scatter('date', 'co2_flux', size=5, color='black', fill_alpha=0.9, source=source)
+        p.scatter('date', 'co2_flux', size=5, color='black', fill_alpha=0.9, legend='Data', source=source)
 
-        #source2 = pd.DataFrame(index=source['date'], data=source['co2_flux'])
-        #daily = ColumnDataSource(source2.rolling('1D').mean())
-        #p.line('date', 'co2_flux', size=5, line_color='white', color='b', fill_alpha=0.9, source=daily)
-
-        #seasonal = ColumnDataSource(source2.rolling('120D').mean())
-        #p.line('date', 'co2_flux', size=5, line_color='white', color='r', fill_alpha=0.9, source=seasonal)
-
+        p = plot_averages(source, p, 'co2_flux')
         p = style(p)
 
         return p
@@ -35,15 +29,9 @@ def flux_tab(source):
                    tools='crosshair,hover,pan,box_zoom,reset', plot_height=300,
                    y_axis_label='H2O flux [umol/m2s]')
         
-        p.scatter('date', 'h2o_flux',  size=5, color='black', fill_alpha=0.9,source=source)
-        
-        #source2 = pd.DataFrame(index=source['date'], data=source['h2o_flux'])
-        #daily = ColumnDataSource(source2.rolling('1D').mean())
-        #p.line('date', 'h2o_flux', size=5, line_color='white', color='b', fill_alpha=0.9, source=daily)
-
-        #seasonal = ColumnDataSource(source2.rolling('120D').mean())
-        #p.line('date', 'h2o_flux', size=5, line_color='white', color='r', fill_alpha=0.9, source=seasonal)
-       
+        p.scatter('date', 'h2o_flux',  size=5, color='black', fill_alpha=0.9, source=source)
+               
+        p = plot_averages(source, p, 'h2o_flux')
         p = style(p)
 
         return p
@@ -53,15 +41,9 @@ def flux_tab(source):
                    tools='crosshair,hover,pan,box_zoom,reset', plot_height=300,
                    y_axis_label='H [W/m2]')
         
-        p.scatter('date', 'H',  size=5, color='black', fill_alpha=0.9,source=source)
-        
-        #source2 = pd.DataFrame(index=source['date'], data=source['H'])
-        #daily = ColumnDataSource(source2.rolling('1D').mean())
-        #p.line('date', 'H', size=5, line_color='white', color='b', fill_alpha=0.9, source=daily)
-
-        #seasonal = ColumnDataSource(source2.rolling('120D').mean())
-        #p.line('date', 'H', size=5, line_color='white', color='r', fill_alpha=0.9, source=seasonal)
-        
+        p.scatter('date', 'H',  size=5, color='black', fill_alpha=0.9, source=source)
+                
+        p = plot_averages(source, p, 'H')
         p = style(p)
 
         return p
@@ -71,15 +53,9 @@ def flux_tab(source):
                    tools='crosshair,hover,pan,box_zoom,reset', plot_height=300,
                    y_axis_label='LE [W/m2]')
 
-        p.scatter('date', 'LE',  size=5, color='black', fill_alpha=0.9,source=source)
-
-        #source2 = pd.DataFrame(index=source['date'], data=source['LE'])
-        #daily = ColumnDataSource(source2.rolling('1D').mean())
-        #p.line('date', 'LE', size=5, line_color='white', color='b', fill_alpha=0.9, source=daily)
-
-        #seasonal = ColumnDataSource(source2.rolling('120D').mean())
-        #p.line('date', 'LE', size=5, line_color='white', color='r', fill_alpha=0.9, source=seasonal)
+        p.scatter('date', 'LE',  size=5, color='black', fill_alpha=0.9, source=source)
         
+        p = plot_averages(source, p, 'H')
         p = style(p)
 
         return p

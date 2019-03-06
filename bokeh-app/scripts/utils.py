@@ -2,6 +2,8 @@ import os
 import pandas as pd
 import numpy as np
 
+from bokeh.models import ColumnDataSource
+
 
 def download_data(bucket_name):
     pass
@@ -18,6 +20,25 @@ def read_data():
     df = df.iloc[0:3000]
     df.index.name = 'date' 
     return df
+
+def plot_averages(source, plot, var):
+
+    palette = ["#718dbf", "#e84d60"]
+    
+
+    daily = pd.DataFrame(index=source.data['date'], data=source.data[var]).resample('1D').mean()
+    daily.index.name = 'date'
+    data = {'date': daily.index, var: daily.values}
+    src = ColumnDataSource(data)
+    plot.line('date', var, line_width=3, line_color=palette[0], legend='Daily', source=src)
+
+    seasonal = pd.DataFrame(index=source.data['date'], data=source.data[var]).resample('120D').mean()
+    seasonal.index.name = 'date'
+    data = {'date': seasonal.index, var: seasonal.values}
+    src = ColumnDataSource(data)
+    plot.line('date', var, line_width=3, line_color=palette[1], legend='Seasonal', source=src)
+
+    return plot
 
 def style(p):
     p.yaxis.axis_label_text_font_size = '16pt'
