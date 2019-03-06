@@ -39,6 +39,7 @@ def filter_tab():
     ustar = TextInput(title='Minimum u*', value='0.3')
     daynight = CheckboxButtonGroup(labels=['Daytime', 'Nighttime'], active=[0, 1])
     update = Button(label='Update', button_type='success')
+    export = Button(label='Export', button_type='primary')
 
     def update_data():
         df = read_data()
@@ -60,14 +61,19 @@ def filter_tab():
         src = ColumnDataSource(df)
         plot.data_source.data = src.data
 
+    def save_spreadsheet():
+        pass
+
     update_data()
 
     update.on_click(update_data)
+    export.on_click(save_spreadsheet)
 
     controls = column(WidgetBox(min_date, max_date),
                       ustar,
                       daynight,
-                      update)
+                      update,
+                      export)
     layout = row(controls, fig)
     tab = Panel(child=layout, title='Filtering', width=3000)
     
