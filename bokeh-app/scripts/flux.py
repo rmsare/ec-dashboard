@@ -1,6 +1,7 @@
 import numpy as np
 import pandas as pd
 
+from scripts.settings import *
 from scripts.utils import plot_averages, style
 
 from bokeh.plotting import figure
@@ -14,8 +15,13 @@ from bokeh.layouts import column, row
 def flux_tab(source):
 
     def make_co2_plot(source):
-        p = figure(title='CO2 Flux', x_axis_type='datetime', tools='crosshair,hover,pan,box_zoom,reset',
-                   y_range=[-5, 5000], plot_height=300, y_axis_label='CO2 flux [umol/m2s]')
+        p = figure(title='CO2 Flux',
+                   x_axis_type='datetime',
+                   tools='crosshair,hover,pan,box_zoom,reset',
+                   tooltips=CO2_FLUX_TOOLTIPS,
+                   y_range=[-5, 5000],
+                   plot_height=300,
+                   y_axis_label='CO2 flux [umol/m2s]')
 
         p.scatter('date', 'co2_flux', size=5, color='black', fill_alpha=0.9, legend='Data', source=source)
 
